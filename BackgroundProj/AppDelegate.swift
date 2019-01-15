@@ -17,7 +17,7 @@ enum MyError: Error {
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var count: Int = 0
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -48,8 +48,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        fetchRequest(successCompletion: { (json) in
-            debugPrint(json)
+        fetchRequest(successCompletion: { [unowned self] (json) in
+            self.count += 1
+            DispatchQueue.main.async {
+                if let ctrl = UIApplication.shared.keyWindow?.rootViewController as? ViewController {
+                    ctrl.setCount(self.count)
+                }
+            }
             completionHandler(.newData)
         }) { (error) in
             completionHandler(.failed)

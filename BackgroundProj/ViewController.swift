@@ -9,21 +9,26 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private var button: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Button", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private var label: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 40.0, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "0"
+        return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        view.addSubview(button)
+        view.addSubview(label)
         NSLayoutConstraint.activate([
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+    }
+    
+    func setCount(_ count: Int) {
+        label.text = String(count)
     }
 
 
